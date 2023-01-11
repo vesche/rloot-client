@@ -67,11 +67,7 @@ class UeberzugImageDisplayer:
                 timer_kill.cancel()
 
 
-u_img = UeberzugImageDisplayer()
-u_img.initialize()
-
-
-class StopwatchApp(App):
+class Client(App):
     """A Textual app to manage stopwatches."""
 
     BINDINGS = [("d", "toggle_dark", "Toggle dark mode")]
@@ -84,8 +80,18 @@ class StopwatchApp(App):
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
         self.dark = not self.dark
-        u_img.draw("/home/vesche/rloot/rloot-client/test_images/lost_poster.jpg", 10, 10, 30, 30)
 
+        max_x, max_y = os.get_terminal_size()
+
+        for x in range(0, max_x, 30):
+            u_img.draw("/home/vesche/rloot/rloot-client/test_images/lost_poster.jpg", x, 0, 30, 30)
+            import time
+            time.sleep(1)
+
+    
 if __name__ == "__main__":
-    app = StopwatchApp()
+    u_img = UeberzugImageDisplayer()
+    u_img.initialize()
+    app = Client()
     app.run()
+    u_img.quit()
